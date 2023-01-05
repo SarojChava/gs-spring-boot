@@ -2,18 +2,18 @@
 trigger:
 - master
 variables:
-- name: tgadsp6
-  value: tgadsp6-api-secret
+
+  myAPIname: tgadsp3
 
 pool:
   vmImage: 'ubuntu-latest' 
 
 steps:
 - script: |
-    echo ${{ variables.tgadsp6 }}
-    echo $(tgadsp6)
+    echo ${{ variables.myAPIname }}
+    echo $(myAPIname)
   displayName: 'Run a one-line script'
-- bash: echo "##vso[task.setvariable variable=tgadsp6]tgadsp6modified" 
+- bash: echo "##vso[task.setvariable variable=myAPIname]tgadsp6modified" 
 - script: |
-    echo ${{ variables.tgadsp6 }}
-    echo $(tgadsp6)
+    echo ${{ variables.myAPIname }}
+    echo $(myAPIname)
