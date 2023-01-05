@@ -5,8 +5,6 @@ variables:
 
   myAPIname: tgadsp3
 
-pool:
-  vmImage: 'ubuntu-latest' 
 
 steps:
 - powershell: |
