@@ -2,12 +2,18 @@
 trigger:
 - master
 variables:
--  group: 'my-var-group'
--  name: 'account'
-   value: 'contoo'
--  name: 'path'
-   value: 'v001/accountAPI'
-steps:
-- powershell: |
-    Write-Host "using an inout - macr: $(account)/$(path)"
-   
+  myAPIname: 'v001/path/account'
+
+jobs:
+- job: A
+  steps: 
+  -  powershell: |
+       Write-Host: "Hello from Job A"
+       Write-Host: "Hello from Job A1"
+       Write-Host: "Hello from Job A2"
+       Write-Host: "Hello from Job A3"
+       Write-Host: "Hello from Job A4"
+- job: B
+  steps:
+    - powershell: |
+        Write-Host: "Hello from job B"
