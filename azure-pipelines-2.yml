@@ -2,11 +2,12 @@
 trigger:
 - master
 variables:
-
-  myAPIname: tgadsp3
-
-
+-  group: 'my-var-group'
+-  name: 'account'
+   value: 'contoo'
+-  name: 'path'
+   value: 'v001/accountAPI'
 steps:
 - powershell: |
-    Write-Host "using an inout - macr: ${env:CONFIG}"
+    Write-Host "using an inout - macr: $(account)/$(path)"
    
