@@ -9,11 +9,6 @@ pool:
   vmImage: 'ubuntu-latest' 
 
 steps:
-- script: |
-    echo ${{ variables.myAPIname }}
-    echo $(myAPIname)
-  displayName: 'Run a one-line script'
-- bash: echo "##vso[task.setvariable variable=myAPIname]tgadsp6modified" 
-- script: |
-    echo ${{ variables.myAPIname }}
-    echo $(myAPIname)
+- powershell: |
+    Write-Host "using an inout - macr: ${env:CONFIG}"
+   
