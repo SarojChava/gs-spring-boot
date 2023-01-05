@@ -4,17 +4,40 @@ trigger:
 variables:
   myAPIname: 'v001/path/account'
 
-jobs:
-- job: A
-  steps: 
-  -  powershell: |
-       Write-Host "Hello from Job A"
-       Write-Host "Hello from Job A1"
-       Write-Host "Hello from Job A2"
-       Write-Host "Hello from Job A3"
-       Write-Host "Hello from Job A4"
-- job: B
-  dependsOn: A
-  steps:
-    - powershell: |
-        Write-Host "Hello from job B"
+stages:
+
+- stage: one
+  jobs:
+  - job: A
+    steps:
+    - task: Bash@3
+      inputs:
+          filePath: 'script-a.sh'
+      name: setvar
+    - bash: |
+       echo "##vso[task.setvariable variable=skipsubsequent;isOutput=true]true"
+      name: skipstep
+
+- stage: two
+  jobs:
+  - job: B
+    variables:
+      - name: StageSauce
+        value: $[ stageDependencies.one.A.outputs['setvar.sauce'] ]
+      - name: skipMe
+        value: $[ stageDependencies.one.A.outputs['skipstep.skipsubsequent'] ]
+    steps:
+    - task: Bash@3
+      inputs:
+        filePath: 'script-b.sh'
+      name: fileversion
+      env:
+        StageSauce: $(StageSauce) # predefined in variables section
+        skipMe: $(skipMe) # predefined in variables section
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo 'Hello inline version'
+          echo $(skipMe) 
+          echo $(StageSauce) 
