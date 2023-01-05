@@ -8,12 +8,13 @@ jobs:
 - job: A
   steps: 
   -  powershell: |
-       Write-Host: "Hello from Job A"
-       Write-Host: "Hello from Job A1"
-       Write-Host: "Hello from Job A2"
-       Write-Host: "Hello from Job A3"
-       Write-Host: "Hello from Job A4"
+       Write-Host "Hello from Job A"
+       Write-Host "Hello from Job A1"
+       Write-Host "Hello from Job A2"
+       Write-Host "Hello from Job A3"
+       Write-Host "Hello from Job A4"
 - job: B
+  dependsOn: A
   steps:
     - powershell: |
-        Write-Host: "Hello from job B"
+        Write-Host "Hello from job B"
