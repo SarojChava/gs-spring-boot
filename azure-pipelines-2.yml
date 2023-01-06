@@ -9,6 +9,14 @@ steps:
 -  script : |
      echo "Binaries -  $(Build.BinariesDirectory)"
      echo "ArtifactStaging - $(Build.ArtifactStagingDirectory)"
+     echo "Build.Repository.LocalPath - $(Build.Repository.LocalPath)"
+     echo "pipeline workspace - $(Pipeline.Workspace)"
+     echo "Build.Repository.Provider - $(Build.Repository.Provider)"
+     echo "Build.SourceBranch - $(Build.SourceBranch)"
+     echo "Build.SourceBranchName - $(Build.SourceBranchName)"
+     echo "Stagind Dir - coped here before pushed to dest. - $(Build.StagingDirectory)"
+
+     echo "Pipeline.Workspace - $(Pipeline.Workspace)"
      echo "BuildID - $(Build.Buildid)"
      echo "Build number - $(Build.BuildNumber)"
      echo "Build container - $()"
