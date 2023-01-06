@@ -26,7 +26,7 @@ jobs:
           
   - job: B
     - ${{ if eq(paramters.OStype, 'ubuntu-latest') }}:
-    steps:
-      - bash: echo "ubuntu OS"
+      steps:
+        - bash: echo "ubuntu OS"
 
     
