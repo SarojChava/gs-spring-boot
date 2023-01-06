@@ -4,7 +4,7 @@ trigger:
 variables:
 - group: pathargumets
 - name: justrefer
-  value: $[pathargumets.pathstring]
+  value: $[variables.pathstring]
 
 jobs:
    - job: A
