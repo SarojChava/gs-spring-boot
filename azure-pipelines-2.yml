@@ -9,7 +9,7 @@ parameters:
     values: 
       - 'ubuntu-latest'
       - 'mac-os'
-  - name: IsPETestreq?
+  - name: IsPETestreq
     default: true
     type: boolean
     values:
