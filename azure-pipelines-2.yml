@@ -7,4 +7,11 @@ variables:
 
 steps:
 -  script : |
-     echo "$(Build.BinariesDirectory)"
+     echo "Binaries -  $(Build.BinariesDirectory)"
+     echo "ArtifactStaging - $(Build.ArtifactStagingDirectory)"
+     echo "BuildID - $(Build.Buildid)"
+     echo "Build number - $(Build.BuildNumber)"
+     echo "Build container - $()"
+     echo "Agent Build dir -  $(Agent.BuildDirectory)"
+     echo "agent Container mapping - $(Agent.ContainerMapping)"
+     echo "BuildUri - $(BuildUri)"
