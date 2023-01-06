@@ -18,15 +18,15 @@ parameters:
 
 jobs:
   - ${{ if eq(parameters.IsPETestreq, true) }}:
-  - job: A
-    displayName: PETET env
-    steps:
-      - powershell: |
-          Write-Host "PE test perfomed - metrics"
-          
-  - job: B
-    - ${{ if eq(paramters.OStype, 'ubuntu-latest') }}:
+    - job: A
+      displayName: PETET env
       steps:
+        - powershell: |
+            Write-Host "PE test perfomed - metrics"
+          
+    - job: B
+      - ${{ if eq(paramters.OStype, 'ubuntu-latest') }}:
+        steps:
         - bash: echo "ubuntu OS"
 
     
