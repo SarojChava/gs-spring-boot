@@ -1,29 +1,32 @@
 
 trigger:
-- master
-variables:
-  myAPIname: 'v001/path/account'
+- none
+parameters:
+  - name: OStype
+    displayName: get the display name 
+    default: 'windows'
+    type: string
+    values: 
+      - 'ubuntu-latest'
+      - 'mac-os'
+  - name: IsPETestreq?
+    default: true
+    type: boolean
+    values:
+      - ture
+      - false
 
 jobs:
+  - ${{ if eq(parameters.IsPETestreq, true) }}:
   - job: A
+    displayName: PETET env
     steps:
       - powershell: |
-          Write-Host "Hello"
-          Write-Host "##vso[task.setvariable variable=localapi]this is local api"
-          Write-Host "##vso[task.setvariable variable=myapi;isoutput=true]this is path api"
-        name: outvar
-      - bash: |
-          echo " accessing outvar.myapi - $(outvar.myapi)" #m this is path api
-          echo "accesing var inside the job - $(myapi)"  # spaces because its defined as out var
-          echo "accesing local api - $(localapi)" #this is local api
+          Write-Host "PE test perfomed - metrics"
           
   - job: B
-    dependsOn: A
-    
-    variables:
-      myVarFromJobA: $[ dependencies.A.outputs['outvar.myapi'] ]  
-
+    - ${{ if eq(paramters.OStype, 'ubuntu-latest') }}:
     steps:
-    - bash: |
-          echo $(myVarFromJobA)  #this is path api
-   
+      - bash: echo "ubuntu OS"
+
+    
