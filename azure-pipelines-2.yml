@@ -10,7 +10,7 @@ jobs:
       - powershell: |
           Write-Host "Hello"
           Write-Host "##vso[task.setvariable variable=myapi;isoutput=true]this is path api"
-          name: outvar
+        name: outvar
       - bash: |
           echo " accessing name inside the job - $(outvar)"
           echo "accesing var inside the job - $(myapi)"
