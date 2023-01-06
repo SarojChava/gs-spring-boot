@@ -4,25 +4,19 @@ trigger:
 variables:
   myAPIname: 'v001/path/account'
 
-
-steps:
--  script : |
-     echo "System.TimelineId - $(System.TimelineId)"
-     echo "System.TeamProject - $(System.TeamProject)"
-     echo "System.TeamProjectId - $(System.TeamProjectId)"
-     echo "Binaries -  $(Build.BinariesDirectory)"
-     echo "ArtifactStaging - $(Build.ArtifactStagingDirectory)"
-     echo "Build.Repository.LocalPath - $(Build.Repository.LocalPath)"
-     echo "pipeline workspace - $(Pipeline.Workspace)"
-     echo "Build.Repository.Provider - $(Build.Repository.Provider)"
-     echo "Build.SourceBranch - $(Build.SourceBranch)"
-     echo "Build.SourceBranchName - $(Build.SourceBranchName)"
-     echo "Stagind Dir - coped here before pushed to dest. - $(Build.StagingDirectory)"
-
-     echo "Pipeline.Workspace - $(Pipeline.Workspace)"
-     echo "BuildID - $(Build.Buildid)"
-     echo "Build number - $(Build.BuildNumber)"
-     echo "Build container - $()"
-     echo "Agent Build dir -  $(Agent.BuildDirectory)"
-     echo "agent Container mapping - $(Agent.ContainerMapping)"
-     echo "BuildUri - $(BuildUri)"
+jobs:
+  - job: A
+    steps:
+      - powershell: |
+          Write-Host: "Hello"
+          Write-Host: ##vso[task.setvariable variable=myapi;isoutput=true]this is path api"
+          name: outvar
+      - bash: |
+          echo " accessing name inside the job - $(outvar)"
+          echo "accesing var inside the job - $(myapi)"
+  - job: B
+    dependsOn: A
+    steps:
+      - bash: |
+          echo "Hello from B"
+          echo  "$[ dependencies.A.outpus['outvar.myapi']]"
