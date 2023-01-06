@@ -9,14 +9,17 @@ jobs:
     steps:
       - powershell: |
           Write-Host "Hello"
+          Write-Host "##vso[task.setvariable variable=localapi]this is local api"
           Write-Host "##vso[task.setvariable variable=myapi;isoutput=true]this is path api"
         name: outvar
       - bash: |
-          echo " accessing name inside the job - $(outvar)"
+          echo " accessing outvar.myapi - $(outvar.myapi)"
           echo "accesing var inside the job - $(myapi)"
+          echo "accesing local api - $(localapi)"
+          
   - job: B
     dependsOn: A
     steps:
       - bash: |
           echo "Hello from B"
-          echo  " accesing from the other job depends On to code  -$[ dependencies.A.outpus['outvar.myapi']]"
+          echo  " accesing from the other job depends On to code  -$[ dependencies.A.outputs['outvar.myapi']]"
