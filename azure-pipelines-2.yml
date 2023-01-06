@@ -11,10 +11,10 @@ jobs:
      steps:
       - powershell: |
            Write-Host "Hello"
-           Write-Host "$(pathargumets.pathdb)"
+           Write-Host "$(pathdb)"
            
       - bash: |
            echo "Hello Bash"
-           echo "$(pathargumets.pathpass)"
+           echo "$(pathpass)"
            echo "$(justrefer)"
         
