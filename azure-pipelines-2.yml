@@ -19,4 +19,4 @@ jobs:
     steps:
       - bash: |
           echo "Hello from B"
-          echo  "$[ dependencies.A.outpus['outvar.myapi']]"
+          echo  " accesing from the other job depends On to code  -$[ dependencies.A.outpus['outvar.myapi']]"
