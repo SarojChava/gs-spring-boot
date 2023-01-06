@@ -23,10 +23,3 @@ jobs:
       steps:
         - powershell: |
             Write-Host "PE test perfomed - metrics"
-          
-    - job: B
-      - ${{ if eq(paramters.OStype, 'ubuntu-latest') }}:
-        steps:
-        - bash: echo "ubuntu OS"
-
-    
