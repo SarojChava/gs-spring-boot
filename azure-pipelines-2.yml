@@ -7,6 +7,9 @@ variables:
 
 steps:
 -  script : |
+     echo "System.TimelineId - $(System.TimelineId)"
+     echo "System.TeamProject - $(System.TeamProject)"
+     echo "System.TeamProjectId - $(System.TeamProjectId)"
      echo "Binaries -  $(Build.BinariesDirectory)"
      echo "ArtifactStaging - $(Build.ArtifactStagingDirectory)"
      echo "Build.Repository.LocalPath - $(Build.Repository.LocalPath)"
