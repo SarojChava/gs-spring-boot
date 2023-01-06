@@ -4,11 +4,11 @@ trigger:
 parameters:
   - name: OStype
     displayName: get the display name 
-    default: 'windows'
+    default: windows
     type: string
     values: 
-      - 'ubuntu-latest'
-      - 'mac-os'
+      - ubuntu-latest
+      - mac-os
   - name: IsPETestreq
     default: true
     type: boolean
