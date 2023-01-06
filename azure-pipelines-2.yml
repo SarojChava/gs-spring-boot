@@ -1,26 +1,4 @@
+trigger: none
 
-trigger:
-- none
-parameters:
-  - name: OStype
-    displayName: get the display name 
-    type: string
-    default: windows    
-    values: 
-      - ubuntu-latest
-      - windows
-      - mac-os
-  - name: IsPETestreq
-    default: true
-    type: boolean
-    values:
-      - ture
-      - false
-
-jobs:
-  - ${{ if eq(parameters.IsPETestreq, true) }}:
-    - job: A
-      displayName: PETET env
-      steps:
-        - powershell: |
-            Write-Host "PE test perfomed - metrics"
+extends:
+ template: start.yaml
