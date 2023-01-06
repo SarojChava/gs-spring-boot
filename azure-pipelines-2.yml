@@ -13,9 +13,9 @@ jobs:
           Write-Host "##vso[task.setvariable variable=myapi;isoutput=true]this is path api"
         name: outvar
       - bash: |
-          echo " accessing outvar.myapi - $(outvar.myapi)"
-          echo "accesing var inside the job - $(myapi)"
-          echo "accesing local api - $(localapi)"
+          echo " accessing outvar.myapi - $(outvar.myapi)" #m this is path api
+          echo "accesing var inside the job - $(myapi)"  # spaces because its defined as out var
+          echo "accesing local api - $(localapi)" #this is local api
           
   - job: B
     dependsOn: A
@@ -25,5 +25,5 @@ jobs:
 
     steps:
     - bash: |
-          echo $(myVarFromJobA)
+          echo $(myVarFromJobA)  #this is path api
    
