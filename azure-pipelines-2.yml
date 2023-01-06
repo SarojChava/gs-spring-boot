@@ -1,4 +1,20 @@
-trigger: none
+trigger:
+- master
 
-extends:
- template: start.yaml
+variables:
+- group: pathargumets
+- name: justrefer
+  value: $[pathargumets.pathstring]
+
+jobs:
+   - job: A
+     steps:
+      - powershell: |
+           Write-Host "Hello"
+           Write-Host "$(pathargumets.pathdb)"
+           
+      - bash: |
+           echo "Hello Bash"
+           echo "$(pathargumets.pathpass)"
+           echo "$(justrefer)"
+        
