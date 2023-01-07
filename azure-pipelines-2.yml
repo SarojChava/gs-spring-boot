@@ -1,13 +1,13 @@
-parameters:
-- name: listOfFruits
-  type: object
-  default:
-  - fruitName: 'apple'
-    colors: ['red','green']
-  - fruitName: 'lemon'
-    colors: ['yellow']
 
-steps:
-- ${{ each fruit in parameters.listOfFruits }} :
-  - ${{ each fruitColor in fruit.colors}} :
-    - script: echo ${{ fruit.fruitName}} ${{ fruitColor }}
+extends:
+  template: template.yml
+  parameters:
+    usersteps:
+
+    - script: echo main script!
+    - bash: echo bash
+    - powershell: echo "main run!"
+    - task: CmdLine@2
+      displayName: Test - Will be stripped out
+      inputs:
+        script: echo This step input!
