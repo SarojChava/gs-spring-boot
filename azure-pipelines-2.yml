@@ -2,8 +2,10 @@ extends:
   template: secure.yml
   parameters:
     usersteps:
-
+    
     - task: CmdLine@2
       displayName: Test - Will be stripped out from main
       inputs:
-        script: echo This step will be stripped out and not run!
+        script: main run
+    - bash: echo this is bash -main
+    - powershell: echo "This is powershellmain"
