@@ -1,6 +1,6 @@
 
 extends:
-  template: template.yml
+  template: secure.yml
   parameters:
     usersteps:
 
