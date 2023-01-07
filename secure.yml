@@ -6,6 +6,7 @@ parameters:
 steps:
 - ${{ each step in parameters.usersteps }}:
   - ${{ if not(or(startsWith(step.task, 'Bash'),startsWith(step.task, 'CmdLine') )) }}:  
+    - script: echo inside ${{ step.task }}
     - ${{ step }}
   # The lines below will replace tasks like Bash@3, CmdLine@2, PowerShell@2
   - ${{ else }}:  
