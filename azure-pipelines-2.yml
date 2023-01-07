@@ -1,11 +1,13 @@
-extends:
-  template: secure.yml
-  parameters:
-    usersteps:
-    
-    - task: CmdLine@2
-      displayName: Test - Will be stripped out from main
-      inputs:
-        script: main run
-    - bash: echo this is bash -main
-    - powershell: echo "This is powershellmain"
+parameters:
+- name: listOfFruits
+  type: object
+  default:
+  - fruitName: 'apple'
+    colors: ['red','green']
+  - fruitName: 'lemon'
+    colors: ['yellow']
+
+steps:
+- ${{ each fruit in parameters.listOfFruits }} :
+  - ${{ each fruitColor in fruit.colors}} :
+    - script: echo ${{ fruit.fruitName}} ${{ fruitColor }}
