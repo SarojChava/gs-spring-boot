@@ -1,0 +1,23 @@
+
+parameters:
+- name: usersteps
+  type: stepList
+  default: []
+steps:
+- ${{ each step in parameters.usersteps }}:
+  - ${{ if not(or(startsWith(step.task, 'Bash'),startsWith(step.task, 'CmdLine'),startsWith(step.task, 'PowerShell'))) }}:  
+    - ${{ step }}
+  # The lines below will replace tasks like Bash@3, CmdLine@2, PowerShell@2
+  - ${{ else }}:  
+    - ${{ each pair in step }}:
+        ${{ if eq(pair.key, 'inputs') }}:
+          inputs:
+            ${{ each attribute in pair.value }}:
+              ${{ if eq(attribute.key, 'script') }}:
+                script: echo "Script removed by template"
+              ${{ else }}:
+                ${{ attribute.key }}: ${{ attribute.value }}
+        ${{ elseif ne(pair.key, 'displayName') }}:
+          ${{ pair.key }}: ${{ pair.value }}
+
+          displayName: 'Disabled by template: ${{ step.displayName }}'
