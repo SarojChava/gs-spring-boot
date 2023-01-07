@@ -1,11 +1,14 @@
-# azure-pipelines.yml
-jobs:
-- template: job.yml
+extends:
+  template: secure.yml
   parameters:
-    jobs:
-    - job: A
-      steps:
-      - script: echo This will get sandwiched between SetupMyBuildTools and PublishMyTelemetry.
-    - job: B
-      steps:
-      - script: echo So will this!
+    usersteps:
+
+    - script: echo This step will be stripped out and not run!
+    - bash: echo This step will be stripped out and not run!
+    - powershell: echo "This step will be stripped out and not run!"
+    - pwsh: echo "This step will be stripped out and not run!"
+    - script: echo This step will be stripped out and not run!
+    - task: CmdLine@2
+      displayName: Test - Will be stripped out
+      inputs:
+        script: echo This step will be stripped out and not run!
