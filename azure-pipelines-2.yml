@@ -1,13 +1,11 @@
-parameters:
-- name: listOfFruits
-  type: object
-  default:
-  - fruitName: 'apple'
-    colors: ['red','green']
-  - fruitName: 'lemon'
-    colors: ['yellow']
-
-steps:
-- ${{ each fruit in parameters.listOfFruits }} :
-  - ${{ each fruitColor in fruit.colors}} :
-    - script: echo ${{ fruit.fruitName}} ${{ fruitColor }}
+# azure-pipelines.yml
+jobs:
+- template: job.yml
+  parameters:
+    jobs:
+    - job: A
+      steps:
+      - script: echo This will get sandwiched between SetupMyBuildTools and PublishMyTelemetry.
+    - job: B
+      steps:
+      - script: echo So will this!
