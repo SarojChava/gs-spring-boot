@@ -20,5 +20,5 @@ steps:
                 ${{ attribute.key }}: ${{ attribute.value }}
         ${{ elseif ne(pair.key, 'displayName') }}:
           ${{ pair.key }}: ${{ pair.value }}
-            - script: echo ${{ pair.key }} ${{ pair.value }}
+   
           displayName: 'Disabled by template: ${{ step.displayName }}'
