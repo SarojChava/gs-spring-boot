@@ -11,3 +11,6 @@ extends:
       displayName: Test - Will be stripped out
       inputs:
         script: echo This step input!
+        bash: echo bah inside the task
+
+
