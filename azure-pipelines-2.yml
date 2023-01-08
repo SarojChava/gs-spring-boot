@@ -1,18 +1,19 @@
-extends:
-  template: secure.yml
-  parameters:
-    usersteps:
-    - script: echo Script1- This step will be stripped out and not run!
-    - bash: echo bash This step will be stripped out and not run!
-    - powershell: echo " pw This step will be stripped out and not run!"
-    - pwsh: echo " pwsh This step will be stripped out and not run!"
-    - script: echo script 2 This step will be stripped out and not run!
-    - task: CmdLine@2
-      displayName: Test -comamn line
-      inputs:
-        script: echo This INPUT step will be stripped out and not run!
-    - task: AzurePowerShell@5
-      inputs:
-        ScriptType: 'InlineScript'
-        Inline: 'hi from powershell'
-        errorActionPreference: 'silentlyContinue'
+trigger:
+- master
+
+variables:
+- group: pathargumets
+- name: justrefer
+  value: $[variables.pathstring]
+
+jobs:
+   - job: A
+     steps:
+      - powershell: |
+           Write-Host "Hello"
+           Write-Host "path db - $(pathdb)"
+           
+      - bash: |
+           echo "Hello Bash"
+           echo "path pass - $(pathpass)"
+           echo "addressing all - $(justrefer)"
