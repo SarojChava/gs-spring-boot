@@ -18,3 +18,4 @@ jobs:
            echo "Hello Bash"
            echo "path pass - $(pathpass)"
            echo "addressing all - $(justrefer)"
+      - script: echo new onw '$(Build.BuildNumber)'
