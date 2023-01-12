@@ -6,6 +6,9 @@ variables:
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
+  MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
+  MAVEN_OPTS: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
+
 
 stages:
 - stage: Build
@@ -15,20 +18,32 @@ stages:
     displayName: Maven Package and Publish Artifacts
     pool:
       vmImage: $(vmImageName)
+
     
     steps:
+    - task: Cache@2
+      inputs:
+        key: '''maven | "$(agent.OS)" | **/pom.xml'''
+        path: 'MAVEN_CACHE_FOLDER'
+        cacheHitVar: CACHE_RESTORED
+      
+ #   - script: mvn clean -B –e
+  #    condition: ne(variables.CACHE_RESTORED, 'true')
+    -  powershell: Write-Host "$(key)"
     - task: Maven@3
+      condition: ne(variables.CACHE_RESTORED, 'true')
       displayName: 'Maven Package'
       inputs:
         mavenPomFile: 'app/pom.xml'
+        options: '-Xmx3072m $(MAVEN_OPTS)'
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         javaHomeOption: 'JDKVersion'
         mavenVersionOption: 'Default'
         mavenAuthenticateFeed: false
         effectivePomSkip: false
-        sonarQubeRunAnalysis: true
-        sqMavenPluginVersionChoice: 'latest'
+        sonarQubeRunAnalysis: false
+
 
     - task: CopyFiles@2
       displayName: 'Copy Files to artifact staging directory'
