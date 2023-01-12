@@ -27,13 +27,12 @@ stages:
         path: 'MAVEN_CACHE_FOLDER'
         cacheHitVar: 'CACHE_RESTORED'
       
- #   - script: mvn clean -B –e
+    - script: mvn install -B –e
   #    condition: ne(variables.CACHE_RESTORED, 'true')
   #  -  powershell: Write-Host "variables.key"
     - task: Maven@4
       inputs:
         mavenPomFile: 'app/pom.xml'
-        options: '-Xmx3072m $(MAVEN_OPTS)'
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         javaHomeOption: 'JDKVersion'
