@@ -3,12 +3,9 @@ trigger:
 - master
 
 variables:
-
-  # Agent VM image name
-  vmImageName: 'ubuntu-latest'
-  MAVEN_CACHE_FOLDER: $(HOME)/.m2/repository
+  MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
   MAVEN_OPTS: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
-  CACHE_RESTORED: 'false'
+  vmImageName: 'ubuntu-latest'
 
 stages:
 - stage: Build
@@ -23,12 +20,15 @@ stages:
     steps:
     - task: Cache@2
       inputs:
-        key: 'maven | "$(agent.OS)" | **/pom.xml'
+        key: 'maven | "$(Agent.OS)" | **/pom.xml'
+        restoreKeys: |
+          maven | "$(Agent.OS)"
+          maven
         path: $(MAVEN_CACHE_FOLDER)
-        cacheHitVar: 'CACHE_RESTORED'
-      
-    - script: |
-       echo "$(Pipeline.Workspace)"
-       echo "$(MAVEN_CACHE_FOLDER)"
-       echo "$(MAVEN_OPTS)"
-       echo "$(System.DefaultWorkingDirectory)"
+      displayName: Cache Maven local repo
+
+    - script: mvn install -B -e
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'app/pom.xml'
+        mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
