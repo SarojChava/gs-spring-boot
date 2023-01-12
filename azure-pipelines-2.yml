@@ -25,10 +25,12 @@ stages:
           maven | "$(Agent.OS)"
           maven
         path: $(MAVEN_CACHE_FOLDER)
+        cacheHitVar: 'CACHE_RESTORED'
       displayName: Cache Maven local repo
 
 
     - task: Maven@4
+      condition: ne(variables.CACHE_RESTORED, 'true')
       inputs:
         mavenPomFile: 'app/pom.xml'
         mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
