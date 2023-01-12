@@ -27,7 +27,7 @@ stages:
         path: $(MAVEN_CACHE_FOLDER)
       displayName: Cache Maven local repo
 
-    - script: mvn install -B -e
+
     - task: Maven@4
       inputs:
         mavenPomFile: 'app/pom.xml'
