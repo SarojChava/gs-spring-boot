@@ -8,7 +8,7 @@ variables:
   vmImageName: 'ubuntu-latest'
   MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
   MAVEN_OPTS: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
-
+  CACHE_RESTORED: 'false'
 
 stages:
 - stage: Build
@@ -24,12 +24,13 @@ stages:
     - task: Cache@2
       inputs:
         key: 'maven | "$(agent.OS)" | **/pom.xml'
-        path: 'MAVEN_CACHE_FOLDER'
+        path: $(MAVEN_CACHE_FOLDER)
         cacheHitVar: 'CACHE_RESTORED'
       
   #  - script: mvn install -B –e
   #    condition: ne(variables.CACHE_RESTORED, 'true')
   #  -  powershell: Write-Host "variables.key"
+  #-  powershell: Write-Host "variables.CACHE_RESTORED"
     - task: Maven@4
       condition: ne(variables.CACHE_RESTORED, 'true')
       inputs:
