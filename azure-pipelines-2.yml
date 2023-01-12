@@ -30,7 +30,7 @@ stages:
 
 
     - task: Maven@4
-     # condition: ne(variables.CACHE_RESTORED, 'true')
+      condition: ne(variables.CACHE_RESTORED, 'true')
       inputs:
         mavenPomFile: 'app/pom.xml'
         publishJUnitResults: true
