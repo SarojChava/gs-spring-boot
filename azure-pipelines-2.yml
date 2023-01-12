@@ -34,3 +34,16 @@ stages:
       inputs:
         mavenPomFile: 'app/pom.xml'
         mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
+    
+    - task: CopyFiles@2
+      displayName: 'Copy Files to artifact staging directory'
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: '**/target/*.?(war|jar)'
+        TargetFolder: $(Build.ArtifactStagingDirectory)
+
+    - task: PublishPipelineArtifact@0
+      displayName: 'Publish pipeline artifacts'
+      inputs:
+        artifactName: 'ccdppathapiservices2'
+        targetPath: '$(Build.ArtifactStagingDirectory)'
