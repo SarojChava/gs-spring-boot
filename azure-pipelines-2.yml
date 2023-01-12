@@ -1,4 +1,4 @@
-name: $(TeamProject)_$(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+name: hello_$(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.rrrr)_$(TeamProject)_hello
 trigger:
 - master
 
