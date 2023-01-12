@@ -3,19 +3,33 @@ trigger:
 - master
 
 variables:
-- group: pathargumets
-- name: justrefer
-  value: $[variables.pathstring]
 
-jobs:
-   - job: A
-     steps:
-      - powershell: |
-           Write-Host "Hello"
-           Write-Host "path db - $(pathdb)"
-           
-      - bash: |
-           echo "Hello Bash"
-           echo "path pass - $(pathpass)"
-           echo "addressing all - $(justrefer)"
-      - script: echo new onw '$(Build.BuildNumber)'
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:
+  - job: MavenPackageAndPublishArtifacts
+    displayName: Maven Package and Publish Artifacts
+    pool:
+      vmImage: $(vmImageName)
+    
+    steps:
+    - task: Maven@3
+      displayName: 'Maven Package'
+      inputs:
+        mavenPomFile: 'app/pom.xml'
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files to artifact staging directory'
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: '**/target/*.?(war|jar)'
+        TargetFolder: $(Build.ArtifactStagingDirectory)
+
+    - task: PublishPipelineArtifact@0
+      displayName: 'Publish pipeline artifacts'
+      inputs:
+        targetPath: $(Build.ArtifactStagingDirectory)
