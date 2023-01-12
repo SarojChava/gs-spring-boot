@@ -27,7 +27,7 @@ stages:
         path: 'MAVEN_CACHE_FOLDER'
         cacheHitVar: 'CACHE_RESTORED'
       
-    - script: mvn install -B –e
+  #  - script: mvn install -B –e
   #    condition: ne(variables.CACHE_RESTORED, 'true')
   #  -  powershell: Write-Host "variables.key"
     - task: Maven@4
