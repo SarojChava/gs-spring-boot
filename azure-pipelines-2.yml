@@ -29,12 +29,10 @@ stages:
       
  #   - script: mvn clean -B –e
   #    condition: ne(variables.CACHE_RESTORED, 'true')
-    -  powershell: Write-Host "variables.key"
-    - task: Maven@3
-      condition: ne(variables.CACHE_RESTORED, 'true')
-      displayName: 'Maven Package'
+  #  -  powershell: Write-Host "variables.key"
+    - task: Maven@4
       inputs:
-        mavenPomFile: 'app/pom.xml'
+        mavenPomFile: 'pom.xml'
         options: '-Xmx3072m $(MAVEN_OPTS)'
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
@@ -43,6 +41,7 @@ stages:
         mavenAuthenticateFeed: false
         effectivePomSkip: false
         sonarQubeRunAnalysis: false
+      
 
 
     - task: CopyFiles@2
