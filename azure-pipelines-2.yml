@@ -31,6 +31,7 @@ stages:
   #    condition: ne(variables.CACHE_RESTORED, 'true')
   #  -  powershell: Write-Host "variables.key"
     - task: Maven@4
+      condition: ne(variables.CACHE_RESTORED, 'true')
       inputs:
         mavenPomFile: 'app/pom.xml'
         publishJUnitResults: true
