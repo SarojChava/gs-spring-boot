@@ -27,33 +27,8 @@ stages:
         path: $(MAVEN_CACHE_FOLDER)
         cacheHitVar: 'CACHE_RESTORED'
       
-  #  - script: mvn install -B –e
-  #    condition: ne(variables.CACHE_RESTORED, 'true')
-  #  -  powershell: Write-Host "variables.key"
-  #-  powershell: Write-Host "variables.CACHE_RESTORED"
-    - task: Maven@4
-      condition: ne(variables.CACHE_RESTORED, 'true')
-      inputs:
-        mavenPomFile: 'app/pom.xml'
-        publishJUnitResults: true
-        testResultsFiles: '**/surefire-reports/TEST-*.xml'
-        javaHomeOption: 'JDKVersion'
-        mavenVersionOption: 'Default'
-        mavenAuthenticateFeed: false
-        effectivePomSkip: false
-        sonarQubeRunAnalysis: false
-      
-
-
-    - task: CopyFiles@2
-      displayName: 'Copy Files to artifact staging directory'
-      inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)'
-        Contents: '**/target/*.?(war|jar)'
-        TargetFolder: $(Build.ArtifactStagingDirectory)
-
-    - task: PublishPipelineArtifact@0
-      displayName: 'Publish pipeline artifacts'
-      inputs:
-        artifactName: 'ccdppathapiservices'
-        targetPath: '$(Build.ArtifactStagingDirectory)'
+    - script: |
+       echo "$(Pipeline.Workspace)"
+       echo "$(MAVEN_CACHE_FOLDER)"
+       echo "$(MAVEN_OPTS)"
+       echo "$(System.DefaultWorkingDirectory)"
