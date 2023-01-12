@@ -32,7 +32,7 @@ stages:
   #  -  powershell: Write-Host "variables.key"
     - task: Maven@4
       inputs:
-        mavenPomFile: 'pom.xml'
+        mavenPomFile: 'app/pom.xml'
         options: '-Xmx3072m $(MAVEN_OPTS)'
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
