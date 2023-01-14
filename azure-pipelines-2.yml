@@ -38,7 +38,7 @@ stages:
         mavenPomFile: 'app/pom.xml'
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
-        codeCoverageToolOption: 'Cobertura'
+        codeCoverageToolOption: 'JaCoCo'
         javaHomeOption: 'JDKVersion'
         mavenVersionOption: 'Default'
         mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
@@ -46,10 +46,6 @@ stages:
         effectivePomSkip: false
         sonarQubeRunAnalysis: false
     
-    - task: PublishCodeCoverageResults@1
-      inputs:
-        codeCoverageTool: 'Cobertura'
-        summaryFileLocation: '**/*coverage.cobertura.xml'
 
     - task: CopyFiles@2
       displayName: 'Copy Files to artifact staging directory'
