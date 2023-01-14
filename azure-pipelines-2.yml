@@ -33,13 +33,7 @@ stages:
       inputs:
         cwd: '$(System.DefaultWorkingDirectory)'
     
-    - task: SonarCloudPrepare@1
-      displayName: Prepare analysis on SonarCloud
 
-      inputs:
-        SonarCloud: SonarCloud
-        organization: mlbofa
-        projectKey: gs-spring-boot
     
     - task: Maven@4
      # condition: ne(variables.CACHE_RESTORED, 'true')
@@ -54,19 +48,14 @@ stages:
         effectivePomSkip: false
         sonarQubeRunAnalysis: false
     
-    - task: SonarCloudAnalyze@1
-      displayName: Run Code Analysis
-    
 
-    - task: SonarCloudPublish@1
-      displayName: Publish Quality Gate Result
 
-#    - task: CopyFiles@2
-#      displayName: 'Copy Files to artifact staging directory'
-#      inputs:
-#        SourceFolder: '$(System.DefaultWorkingDirectory)'
-#        Contents: '**/target/*.?(war|jar)'
-#        TargetFolder: $(Build.ArtifactStagingDirectory)
+    - task: CopyFiles@2
+      displayName: 'Copy Files to artifact staging directory'
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: '**/target/*.?(war|jar)'
+        TargetFolder: $(Build.ArtifactStagingDirectory)
 
     - task: PublishPipelineArtifact@0
       displayName: 'Publish pipeline artifacts'
