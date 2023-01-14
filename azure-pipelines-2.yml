@@ -29,10 +29,7 @@ stages:
         cacheHitVar: 'CACHE_RESTORED'
       displayName: Cache Maven local repo
 
-    - task: WhiteSource@21
-      inputs:
-        cwd: '$(System.DefaultWorkingDirectory)'
-    
+  
 
     
     - task: Maven@4
@@ -41,6 +38,7 @@ stages:
         mavenPomFile: 'app/pom.xml'
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        codeCoverageToolOption: 'Cobertura'
         javaHomeOption: 'JDKVersion'
         mavenVersionOption: 'Default'
         mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
@@ -48,7 +46,10 @@ stages:
         effectivePomSkip: false
         sonarQubeRunAnalysis: false
     
-
+    - task: PublishCodeCoverageResults@1
+      inputs:
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: '**/*coverage.cobertura.xml'
 
     - task: CopyFiles@2
       displayName: 'Copy Files to artifact staging directory'
@@ -56,6 +57,7 @@ stages:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
         Contents: '**/target/*.?(war|jar)'
         TargetFolder: $(Build.ArtifactStagingDirectory)
+    -
 
     - task: PublishPipelineArtifact@0
       displayName: 'Publish pipeline artifacts'
