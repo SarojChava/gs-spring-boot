@@ -6,7 +6,7 @@ trigger:
 variables:
   MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
   MAVEN_OPTS: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
-  vmImageName: 'ubuntu-latest'
+  vmImageName: 'windows-latest'
 
 stages:
 - stage: Build
@@ -57,5 +57,20 @@ stages:
       inputs:
         artifactName: 'ccdppathapiservices2'
         targetPath: '$(Build.ArtifactStagingDirectory)'
-        
+    
+    - script:  echo 'staging release'
+    - script: |
+        echo "system -DefaultWorkingDirectory - $(system.DefaultWorkingDirectory)"
+        echo "build.SourcesDirectory - $(build.SourcesDirectory)"
+        echo "Agent.BuildDirectory - $(Agent.BuildDirectory)"
+        echo "Build.ArtifactStagingDirectory - $(Build.ArtifactStagingDirectory)"
+        echo "Build.Repository.LocalPath - $(Build.Repository.LocalPath)"
+        echo "Build.SourcesDirectory - $(Build.SourcesDirectory)"
+        echo "Build.BinariesDirectory - $(Build.BinariesDirectory)"
+        echo "Agent.WorkFolder - $(Agent.WorkFolder)"
+        echo "Pipeline.Workspace - $(Pipeline.Workspace)"
+        echo "System.DefaultWorkingDirectory - $(System.DefaultWorkingDirectory)"
+        echo "Agent.ToolsDirectory - $(Agent.ToolsDirectory)"
+        echo "Agent.TempDirectory - $(Agent.TempDirectory)"
+        echo "Agent.HomeDirectory - $(Agent.HomeDirectory)"
     
