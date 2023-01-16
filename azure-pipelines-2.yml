@@ -57,7 +57,13 @@ stages:
       inputs:
         artifactName: 'ccdppathapiservices2'
         targetPath: '$(Build.ArtifactStagingDirectory)'
-    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+           ls  $(pwd)
+          echo '$(pwd)'
     - script:  echo 'staging release'
     - script: |
         echo "system -DefaultWorkingDirectory - $(system.DefaultWorkingDirectory)"
@@ -73,4 +79,23 @@ stages:
         echo "Agent.ToolsDirectory - $(Agent.ToolsDirectory)"
         echo "Agent.TempDirectory - $(Agent.TempDirectory)"
         echo "Agent.HomeDirectory - $(Agent.HomeDirectory)"
-    
+
+
+
+- stage: test
+  displayName: test stage
+  jobs:
+  - job: MavenPackageAndPublishArtifacts
+    displayName: Maven Package and Publish Artifacts
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+      - script: |
+          echo "2nd stage"
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            ls  $(pwd)
+            
+            echo '$(pwd)'
