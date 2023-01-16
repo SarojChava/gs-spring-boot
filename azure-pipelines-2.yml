@@ -57,10 +57,10 @@ stages:
 - stage: test
   displayName: test stage
   jobs:
-  - job: MavenPackageAndPublishArtifacts
+  - job: test
     displayName: Maven Package and Publish Artifacts
     pool:
-      vmImage: $(vmImageName)
+      vmImage: server
     steps:
       - script: |
           echo "2nd stage"
