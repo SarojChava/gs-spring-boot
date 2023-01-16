@@ -59,17 +59,24 @@ stages:
   jobs:
   - job: test
     displayName: Maven Package and Publish Artifacts
-    pool:
-      vmImage: server
+    timeoutInMinutes: 10
+    pool: server
     steps:
   
-      - task: ManualValidation@0
-        inputs:
-          notifyUsers: 'mlbofa\chavasaroj.cse@gmail.com'
+    - task: ManualValidation@0
+      timeoutInMinutes: 1
+      inputs:
+        notifyUsers: 'mlbofa\chavasaroj.cse@gmail.com'
 
-          instructions: 'please approve'
-      - task: ManualIntervention@8
-        inputs:
-          instructions: 'manual intervention'
-          emailRecipients: 'chavasaroj.cse@gmail.com'
- 
+        instructions: 'please approve'
+    - task: ManualIntervention@8
+      inputs:
+        instructions: 'manual intervention'
+        emailRecipients: 'chavasaroj.cse@gmail.com'
+  - job: last_job
+    displayName: last job
+    pool: 
+      vmImage: 'ubuntu-latest'
+    steps:
+      - script: |
+         echo finished
