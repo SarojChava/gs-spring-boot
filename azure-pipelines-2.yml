@@ -70,13 +70,17 @@ stages:
 
         instructions: 'please approve'
     - task: ManualIntervention@8
+      timeoutInMinutes: 2
       inputs:
         instructions: 'manual intervention'
-        emailRecipients: 'chavasaroj.cse@gmail.com'
+        emailRecipients: 'mlbofa\chavasaroj.cse@gmail.com'
+        onTimeout: resume
+
   - job: last_job
     displayName: last job
-    pool: 
-      vmImage: 'ubuntu-latest'
+    dependsOn: test
+    pool:
+      vmImage: $(vmImageName)
     steps:
-      - script: |
-         echo finished
+    - script: |
+        echo "finished -all"
