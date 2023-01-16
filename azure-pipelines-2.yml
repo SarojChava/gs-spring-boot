@@ -27,6 +27,35 @@ stages:
       displayName: Cache Maven local repo
 
   
+    
+    - task: Maven@4
+     # condition: ne(variables.CACHE_RESTORED, 'true')
+      inputs:
+        mavenPomFile: 'app/pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        codeCoverageToolOption: 'JaCoCo'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+    
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files to artifact staging directory'
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: '**/target/*.?(war|jar)'
+        TargetFolder: $(Build.ArtifactStagingDirectory)
+  
+
+    - task: PublishPipelineArtifact@0
+      displayName: 'Publish pipeline artifacts'
+      inputs:
+        artifactName: 'ccdppathapiservices2'
+        targetPath: '$(Build.ArtifactStagingDirectory)'
 
     - task: Bash@3
       inputs:
@@ -57,21 +86,9 @@ stages:
 - stage: test
   displayName: test stage
   jobs:
-  - job: test
-    displayName: Maven Package and Publish Artifacts
-    timeoutInMinutes: 10
-    pool: server
-    steps:
-  
-    - task: ManualValidation@0
-      timeoutInMinutes: 1
-      inputs:
-        notifyUsers: 'mlbofa\chavasaroj.cse@gmail.com'
-
-        instructions: 'please approve'
+ 
   - job: last_job
     displayName: last job
-    dependsOn: test
     pool:
       vmImage: $(vmImageName)
     steps:
