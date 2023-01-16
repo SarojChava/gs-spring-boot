@@ -63,7 +63,7 @@ stages:
         script: |
           # Write your commands here
            ls  $(pwd)
-          echo '$(pwd)'
+          echo $(pwd)
     - script:  echo 'staging release'
     - script: |
         echo "system -DefaultWorkingDirectory - $(system.DefaultWorkingDirectory)"
