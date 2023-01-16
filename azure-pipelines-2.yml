@@ -62,8 +62,7 @@ stages:
     pool:
       vmImage: server
     steps:
-      - script: |
-          echo "2nd stage"
+  
       - task: ManualValidation@0
         inputs:
           notifyUsers: 'mlbofa\chavasaroj.cse@gmail.com'
@@ -73,10 +72,4 @@ stages:
         inputs:
           instructions: 'manual intervention'
           emailRecipients: 'chavasaroj.cse@gmail.com'
-      - task: Bash@3
-        inputs:
-          targetType: 'inline'
-          script: |
-            ls  $(pwd)
-            
-            echo '$(pwd)'
+ 
