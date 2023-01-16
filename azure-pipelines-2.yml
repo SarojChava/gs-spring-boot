@@ -28,40 +28,12 @@ stages:
 
   
 
-    
-    - task: Maven@4
-     # condition: ne(variables.CACHE_RESTORED, 'true')
-      inputs:
-        mavenPomFile: 'app/pom.xml'
-        publishJUnitResults: true
-        testResultsFiles: '**/surefire-reports/TEST-*.xml'
-        codeCoverageToolOption: 'JaCoCo'
-        javaHomeOption: 'JDKVersion'
-        mavenVersionOption: 'Default'
-        mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
-        mavenAuthenticateFeed: false
-        effectivePomSkip: false
-        sonarQubeRunAnalysis: false
-    
-
-    - task: CopyFiles@2
-      displayName: 'Copy Files to artifact staging directory'
-      inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)'
-        Contents: '**/target/*.?(war|jar)'
-        TargetFolder: $(Build.ArtifactStagingDirectory)
-  
-
-    - task: PublishPipelineArtifact@0
-      displayName: 'Publish pipeline artifacts'
-      inputs:
-        artifactName: 'ccdppathapiservices2'
-        targetPath: '$(Build.ArtifactStagingDirectory)'
     - task: Bash@3
       inputs:
         targetType: 'inline'
         script: |
           # Write your commands here
+           cat sampleTest.txt
            ls  $(pwd)
           echo $(pwd)
     - script:  echo 'staging release'
@@ -92,6 +64,15 @@ stages:
     steps:
       - script: |
           echo "2nd stage"
+      - task: ManualValidation@0
+        inputs:
+          notifyUsers: 'mlbofa\chavasaroj.cse@gmail.com'
+
+          instructions: 'please approve'
+      - task: ManualIntervention@8
+        inputs:
+          instructions: 'manual intervention'
+          emailRecipients: 'chavasaroj.cse@gmail.com'
       - task: Bash@3
         inputs:
           targetType: 'inline'
