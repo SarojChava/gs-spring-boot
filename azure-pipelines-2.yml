@@ -62,7 +62,7 @@ stages:
         targetType: 'inline'
         script: |
           # Write your commands here
-           cat sampleTest.txt
+           cat > sampleTest.txt
            ls  $(pwd)
           echo $(pwd)
     - script:  echo 'staging release'
