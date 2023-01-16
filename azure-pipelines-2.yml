@@ -69,13 +69,6 @@ stages:
         notifyUsers: 'mlbofa\chavasaroj.cse@gmail.com'
 
         instructions: 'please approve'
-    - task: ManualIntervention@8
-      timeoutInMinutes: 2
-      inputs:
-        instructions: 'manual intervention'
-        emailRecipients: 'mlbofa\chavasaroj.cse@gmail.com'
-        onTimeout: resume
-
   - job: last_job
     displayName: last job
     dependsOn: test
