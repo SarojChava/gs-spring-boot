@@ -107,3 +107,14 @@ stages:
     steps:
     - script: |
         echo "finished -all"
+- stage: SAPE
+  displayName: SAPE stage
+  jobs:
+ 
+  - job: SAPE_last_job
+    displayName: saPE_last job
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - script: |
+        echo "SAPE -all"
