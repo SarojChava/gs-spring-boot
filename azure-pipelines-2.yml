@@ -107,6 +107,22 @@ stages:
     steps:
     - script: |
         echo "finished -all"
+
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        targetPath: '$(Pipeline.Workspace)'
+
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+            # Write your commands here
+
+            ls  $(pwd)
+            ls  $(Pipeline.Workspace)
+            echo $(Pipeline.Workspace)
+
 - stage: SAPE
   displayName: SAPE stage
   jobs:
