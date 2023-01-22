@@ -73,13 +73,13 @@ stages:
       displayName: 'Publish pipeline artifacts2'
       inputs:
         targetPath: '$(System.DefaultWorkingDirectory)/app'
-        artifact: 'ccdppathapiservicescode'
+        artifact: 'ccdppathapiservicescode_$(JDKVersion)'
         publishLocation: 'pipeline'
       
     - task: PublishPipelineArtifact@0
       displayName: 'Publish pipeline artifacts'
       inputs:
-        artifactName: $(JDKVersion)'
+        artifactName: $(JDKVersion)
         targetPath: '$(Build.ArtifactStagingDirectory)'
 
     - task: Bash@3
