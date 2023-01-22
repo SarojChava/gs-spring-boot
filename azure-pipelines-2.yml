@@ -11,12 +11,24 @@ variables:
 stages:
 - stage: Build
   displayName: Build stage
+  #jobs:
+  #- job: MavenPackageAndPublishArtifacts
+  #  displayName: Maven Package and Publish Artifacts
+  #  pool:
+  #    vmImage: $(vmImageName)
   jobs:
-  - job: MavenPackageAndPublishArtifacts
-    displayName: Maven Package and Publish Artifacts
+  - job: Build
+    strategy:
+      matrix:
+        java8:
+          JDKVersion: '1.8'
+        java9:
+          JDKVersion: '1.9'
+        java7:
+          JDKVersion: '1.7'
+      maxParallel: 2
     pool:
       vmImage: $(vmImageName)
-
     
     steps:
     - task: Cache@2
@@ -67,7 +79,7 @@ stages:
     - task: PublishPipelineArtifact@0
       displayName: 'Publish pipeline artifacts'
       inputs:
-        artifactName: 'ccdppathapiservices2'
+        artifactName: $(JDKVersion)'
         targetPath: '$(Build.ArtifactStagingDirectory)'
 
     - task: Bash@3
