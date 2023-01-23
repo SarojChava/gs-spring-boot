@@ -138,11 +138,15 @@ stages:
 - stage: SAPE
   displayName: SAPE stage
   jobs:
- 
-  - job: SAPE_last_job
-    displayName: saPE_last job
-    pool:
-      vmImage: $(vmImageName)
-    steps:
-    - script: |
-        echo "SAPE -all"
+  - deployment: Deploy
+    displayName: Deploy to AKS
+    environment: 'sape'
+    pool: 
+      vmImage: ubuntu-latest
+    strategy:
+      runOnce:
+       deploy:
+        steps:
+        - script: |
+            echo "done"
+            echo "env deployed"
