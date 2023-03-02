@@ -2,7 +2,13 @@
 # Build your Java project and deploy it to Azure as a Linux web app
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
+# YAML file in the release branch
+schedules:
+- cron: "0 0 * * *"
+  displayName: Daily midnight build
+  branches:
+    include:
+    - main
 trigger:
 - master
 
@@ -44,6 +50,16 @@ stages:
       inputs:
         targetPath: $(Build.ArtifactStagingDirectory)
 
+
+- stage: test
+  
+  jobs:
+  
+    - job : test_job
+      
+      steps:
+      
+        - bash: echo test job
 # - stage: Deploy
 #   displayName: Deploy stage
 #   dependsOn: Build
