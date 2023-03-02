@@ -1,4 +1,4 @@
-name: CPPTPATH.$(TeamProject)_$SourceBranchName)_$(Rev:rrrr)
+name: CPPTPATH.$(TeamProject)_$(SourceBranchName)_$(Rev:rrrr)
 schedules:
 - cron: "0 0 * * *"
   displayName: Daily midnight build
