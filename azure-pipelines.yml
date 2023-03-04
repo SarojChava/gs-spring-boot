@@ -15,7 +15,7 @@ variables:
   tes: 'test123'
   # Web app name
   webAppName: 'java-spring-boot'
-
+  webAppName1: 'java-spring-boot2'
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
