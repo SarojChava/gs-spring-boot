@@ -1,6 +1,6 @@
 name: CPPTPATH.$(TeamProject)_$(SourceBranchName)_$(Rev:rrrr)
 schedules:
-- cron: "0 0 * * *"
+- cron: "*/2 * * * *"
   displayName: Daily midnight build
   branches:
     include:
@@ -15,7 +15,7 @@ variables:
   tes: 'test123'
   # Web app name
   webAppName: 'java-spring-boot'
-  webAppName1: 'java-spring-boot2'
+
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
